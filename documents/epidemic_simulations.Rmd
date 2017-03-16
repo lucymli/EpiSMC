@@ -5,7 +5,7 @@ date: "3/16/2017"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
 library(grid)
@@ -22,9 +22,11 @@ The Susceptible-Infected-Removed (SIR) is a simple state-space-model in which in
 
 ```{r SIRsimulations}
 set.seed(20170317)
-simulated.data <- 
-  SIR(beta=0.15, gamma=1/10, init.states=list(S=1000, I=1, R=0), time.step=0.25, num.steps=800, agg.time.steps=4) %>%
-  get_SIR_data(reporting=0.25, filename="../data/sim_SIR_beta_0.15_gamma_0.1.csv")
+simulated.epidemic <- SIR(beta=0.15, gamma=1/10, 
+                          init.states=list(S=1000, I=1, R=0), 
+                          time.step=0.25, num.steps=800, 
+                          agg.time.steps=4) # aggregate incidence reports temporally
+simulated.data <- get_SIR_data(simulated.epidemic, reporting=0.25, filename="../data/sim_SIR_beta_0.15_gamma_0.1_rho_0.25.csv") # 25% sampling probability
 ```
 
 
