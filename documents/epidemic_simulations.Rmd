@@ -1,0 +1,35 @@
+---
+title: "Generating observations from epidemic simulations"
+author: "Lucy M Li"
+date: "3/16/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
+library(grid)
+library(gridExtra)
+source("../R/simulations.R")
+source("../R/simulate_data.R")
+source("../R/visualize.R")
+```
+
+## Epidemic simulations using the SIR model
+
+The Susceptible-Infected-Removed (SIR) is a simple state-space-model in which infected individuals $I(t)$ cause infections in susceptible individuals $S(t)$ at a rate $\beta \frac{I}{N}$. Infected individuals are removed (through recovery or death) at a rate $\gamma$. The duration of infection is $D = 1\frac{1}{\gamma}$ and the basic reproduction number is $R_0 = \beta D$.
+
+
+```{r SIRsimulations}
+set.seed(20170317)
+simulated.data <- 
+  SIR(beta=0.15, gamma=1/10, init.states=list(S=1000, I=1, R=0), time.step=0.25, num.steps=800, agg.time.steps=4) %>%
+  get_SIR_data(reporting=0.25, filename="../data/sim_SIR_beta_0.15_gamma_0.1.csv")
+```
+
+
+```{r SIRsimulationsPlots, fig.width=6, fig.height=5}
+simulation.plot <- visualize.SIR(simulated.data)
+grid.draw(simulation.plot)
+```
+
