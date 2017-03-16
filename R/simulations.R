@@ -23,7 +23,7 @@ SIR <- function (beta=0.15, gamma=1/10, init.states=list(S=1000, I=1, R=0),
     }
     tx <- tx + 1
   }
-  epi.df <- data.frame(time=seq(0, by=time.step*agg.time.steps, length.out=nrow(epi.mat)), epi.mat)
+  epi.df <- data.frame(Time=seq(0, by=time.step*agg.time.steps, length.out=nrow(epi.mat)), epi.mat)
   names(epi.df)[-1] <- c("S", "I", "R", "Incidence")
   return (epi.df)
 }
